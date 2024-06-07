@@ -1,0 +1,100 @@
+<link
+  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+<div class="sidebar" [ngClass]="{ close: !isSidebarActive }">
+<!-- <div class="sidebar" [ngClass]="{ close: !isSidebarActive }"> -->
+  
+        <div class="logo_box" >
+          <span [ngClass]="{ 'hidden': !isSidebarActive }">{{userName}}</span>          
+        </div>
+    <ul class="sidebar-list">
+      <li>
+        <a routerLink="/dashboard" class="title" (click)="toggleActive(0)">
+             <!-- <div class="title" > -->
+         <i class='bx bxl-amazon' ></i>
+         <span class="name">AWS</span>
+         <i id="rightIcon"></i>
+        <!-- </div> -->
+      </a>
+        <div class="submenu" [ngClass]="{ active: activeItems[0] }">
+          <a routerLink="/dashboard" class="link submenu-title">Dashboard</a>
+        </div>
+      </li>
+
+
+      <li class="dropdown" [ngClass]="{ active: activeItems[1] }">
+        <a class="link" (click)="toggleActive(1)">
+        <div class="title" >
+          <i class='bx bxs-envelope'></i>
+            <span class="name">Reachouts</span>
+          <i class="bx bxs-chevron-down" id="rightIcon"></i>
+        </div>
+      </a>
+        <div class="submenu" [ngClass]="{ active: activeItems[1] }">
+          <a href="#" class="link submenu-title">Reachouts</a>
+          <a href="#" class="link">HTML & CSS</a>
+          <a href="#" class="link">React</a>
+          <a href="#" class="link">Java Script</a>
+        </div>
+      </li>
+      
+
+      <li class="dropdown" [ngClass]="{ active: activeItems[2] }">
+        <a class="link">
+        <div class="title" (click)="toggleActive(2)">
+         
+          <i class='bx bxs-data'></i>
+            <span class="name">Logs</span>
+          
+          <i class="bx bxs-chevron-down" id="rightIcon"></i>
+        </div>
+      </a>
+        <div class="submenu" [ngClass]="{ active: activeItems[2] }">
+          <a href="#" class="link submenu-title">Logs</a>
+          <a href="#" class="link">Web Design</a>
+          <a href="#" class="link">Login Form</a>
+          <a href="#" class="link">Card Design</a>
+        </div>
+      </li>
+
+
+      <li>
+        <a class="link">
+        <div class="title" (click)="toggleActive(3)">
+          
+          <i class='bx bxs-phone'></i>
+            <span class="name">CDR</span>
+          
+          <i id="rightIcon"></i>
+        </div>
+      </a>
+        <div class="submenu" [ngClass]="{ active: activeItems[3] }">
+          <a href="#" class="link submenu-title">Rite App</a>
+        </div>
+      </li>
+
+      <li class="dropdown" [ngClass]="{ active: activeItems[4] }">
+        <a class="link">
+        <div class="title" (click)="toggleActive(4)">
+         
+          <i class='bx bx-line-chart'></i>
+            <span class="name">Reports</span>
+          
+          <i class="bx bxs-chevron-down" id="rightIcon"></i>
+        </div>
+      </a>
+        <div class="submenu" [ngClass]="{ active: activeItems[4] }">
+          <a href="#" class="link submenu-title">Reports</a>
+          <a routerLink="/autopilot" class="link">Ap Logs</a>
+          <a routerLink="/autopilot" class="link">AP</a>
+          <a href="#" class="link">Excel</a>
+        </div>
+      </li>
+
+
+      <div class="left_arrow" (click)="toggleSidebar()" [class.rotate_arrow]="!isSidebarActive" >
+        <i class="bx bxs-left-arrow-circle"></i>
+      </div>
+    </ul>
+  </div>

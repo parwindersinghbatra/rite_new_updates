@@ -1,0 +1,229 @@
+
+<div class="main_container">
+    <div class="grid-container">
+      <div>
+        <select
+          name="PositionID"
+          #selectValue
+          (change)="onPositionSelect($event)"
+        >
+          <option value="" [defaultSelected]>Position ID</option>
+          <option *ngFor="let item of jsonData" [value]="item.PositionID">
+            {{ item.PositionID }}
+          </option>
+        </select>
+        <button
+          class="ap_span"
+          (click)="showDetails()"
+          [disabled]="!selectedPositionId"
+          [ngStyle]="{ cursor: selectedPositionId ? 'pointer' : 'not-allowed' }"
+        >
+          i
+        </button>
+        <br />
+        <select
+          name="RecruiterName"
+          *ngIf="isVisible"
+          [(ngModel)]="selectedRecruiterName"
+          (change)="onRecruiterNameSelected($event)"
+        >
+
+          <option *ngFor="let name of recruiterNames" [value]="name">
+            {{ name }}
+          </option>
+        </select>
+      </div>
+      <div>
+  
+      
+        <div *ngIf="isVisibleData" class="search_box_condition">
+          <div class="search_box_condition_one">
+            <button class="button" (click)="booleanSearch()">Boolean</button>
+          </div>
+          <div class="search_box_condition_two">
+            <textarea rows="5" cols="40" #searcAPI></textarea>
+          </div>
+          <div class="search_box_condition_three">
+            <button
+              class="button-7"
+              role="button"
+              (click)="Search_data_PCR(searcAPI.value)" 
+            >
+              PCR
+            </button>
+            <button class="button-7" role="button">Elastic</button>
+          </div>
+        </div>
+  
+        <div *ngIf="isSeachData" class="search_box_condition">
+          <div class="search_box_condition_one">
+            <button class="button" (click)="PCRSearch()">PCR</button>
+          </div>
+          <div class="search_box_condition_two">
+            <select>
+              <option>Select PCR Rollup List</option>
+            </select>
+          </div>
+          <div class="search_box_condition_three">
+            <button class="button-7" role="button">Search</button>
+          </div>
+        </div>
+      </div>
+   
+      <div *ngIf="isVisible">
+        <div class="btn-group">
+          <button (click)="previewJD()" class="button">Preview JD</button>
+          <button (click)="clearAll()" class="button btn2">Clear</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isShow" class="popup-overlay" (click)="onOverlayClick($event)">
+      <div class="popup" (click)="$event.stopPropagation()">
+        <span class="close-btn" (click)="closePopup()">&times;</span>
+        <div *ngIf="selectedUserData" class="contentData">
+          <h3>User Data</h3>
+          <table id="customers">
+            <tr>
+              <th>Identifier</th>
+              <td>{{ selectedUserData.Identifier }}</td>
+            </tr>
+            <tr>
+              <th>PositionID</th>
+              <td>{{ selectedUserData.PositionID }}</td>
+            </tr>
+            <tr>
+              <th>Recruiter Name</th>
+              <td>{{ selectedUserData.RecruiterName }}</td>
+            </tr>
+            <tr>
+              <th>Job Type</th>
+              <td>{{ selectedUserData.JobType }}</td>
+            </tr>
+            <tr>
+              <th>Duration</th>
+              <td>{{ selectedUserData.Duration }}</td>
+            </tr>
+            <tr>
+              <th>Position Title</th>
+              <td>{{ selectedUserData.PositionTitle }}</td>
+            </tr>
+            <tr>
+              <th>Location</th>
+              <td>{{ selectedUserData.Location }}</td>
+            </tr>
+            <tr>
+              <th>Schedule Hours</th>
+              <td>{{ selectedUserData.ScheduleHours }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div
+      *ngIf="isPreviewJDShow"
+      class="popup-overlay"
+      (click)="onpreviewJDPopup($event)"
+    >
+      <div class="popup" (click)="$event.stopPropagation()">
+        <h4>Email Preview Template</h4>
+        <hr />
+        <div class="container_contact grid-container" *ngIf="selectedUserData">
+          <div class="item">
+            <label for="Identifier">Identifier</label>
+            <input
+              type="text"
+              id="Identifier"
+              name="Identifier"
+              [(ngModel)]="selectedUserData.Identifier"
+            readonly
+            />
+          </div>
+          <div class="item">
+            <label for="Position Id">Position Id</label>
+            <input
+              type="text"
+              id="Position Id"
+              name="Position Id"
+              [(ngModel)]="selectedUserData.PositionID"
+              readonly
+            />
+          </div>
+          <div class="item">
+            <label for="Recruiter">Recruiter</label>
+            <input
+              type="text"
+              id="Recruiter"
+              name="Recruiter"
+              [(ngModel)]="selectedRecruiterName"
+              readonly
+            />
+          </div>
+          <div class="item merge">
+            <label for="Subject">Subject</label>
+            <input
+            type="text"
+              id="Subject"
+              name="Subject"
+              [(ngModel)]="selectedUserData.Subject"
+              readonly
+            />
+          </div>
+          <div class="item merge">
+            <label for="Job Description">Job Description</label>
+            <textarea
+              id="Job_Description"
+              name="Job_Description"
+              style="height: 200px"
+              [(ngModel)]="selectedUserData.JobType"
+              class="contact_form_textarea"
+              readonly
+            ></textarea>
+          </div>
+          <input type="submit" value="Close" (click)="closeJDPopup()"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div
+    class="Searched_data_container"
+    *ngIf="isSearchDataVisible && tableSearchData"
+  >
+    <table class="search_data_table">
+      <tr>
+        <th>Candidate Name</th>
+        <th>Position Title</th>
+        <th>Email Address</th>
+        <th>Position Title</th>
+        <th>Job Type</th>
+        <th>Duration</th>
+        <th>Location</th>
+
+      </tr>
+      <tr *ngFor="let data of getPaginatedData()" (click) = "emailsend(data)" >
+        <td>{{ data.RecruiterName }}</td>
+        <td>{{ data.PositionTitle }}</td>
+        <td >{{data.Email}}</td>
+        <td>{{data.PositionTitle}}</td>
+        <td>{{ data.JobType }}</td>
+        <td>{{ data.Duration }}</td>
+        <td>{{ data.Location }}</td>
+
+      </tr>
+    </table>
+    
+  </div>
+  <div *ngIf="isSearchDataVisible && tableSearchData.length === 0">
+    No results found.
+  </div>
+  <div *ngIf="totalPages > 1 && isVisiblePageDetails" class="pagination" >
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+  <!-- <div *ngIf="totalPages > 1" class="pagination">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+  </div> -->

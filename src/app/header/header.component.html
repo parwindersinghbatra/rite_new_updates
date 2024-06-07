@@ -1,0 +1,14 @@
+<link
+  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+<div id="header" [ngClass]="{ 'expanded': isSidebarActive }">
+    <div id="logo">
+      Home /
+    </div>
+    <div id="menu">
+      <a><i class='bx bxs-phone'></i></a>
+      <a><i class='bx bxs-user'></i></a>
+      <a (click)="logout()"><i class='bx bx-log-in'></i></a>
+    </div>
+</div>

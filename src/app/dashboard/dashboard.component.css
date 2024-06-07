@@ -1,0 +1,6 @@
+.container_h1{
+    text-align: center;
+    width:100%;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
