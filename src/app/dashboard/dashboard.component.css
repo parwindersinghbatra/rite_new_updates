@@ -1,6 +1,25 @@
-.container_h1{
-    text-align: center;
-    width:100%;
-    justify-content: center;
-    transition: all 0.5s ease;
+.container_h1 {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  transition: all 0.5s ease;
+  height:80vh;
+  margin-top:5px;
+}
+.container_h1>h1{
+  padding-top:50px;
+}
+.heading-animate-top {
+  position: relative;
+  animation: animatetop .8s;
+}
+@keyframes animatetop {
+  from {
+  top: -100px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
 }

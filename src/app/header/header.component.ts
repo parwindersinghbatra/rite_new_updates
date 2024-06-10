@@ -23,6 +23,7 @@ export class HeaderComponent implements OnChanges{
       console.log('Header isSidebarActive changed:', changes['isSidebarActive'].currentValue);
     }
   }
+  
   logout(){
     sessionStorage.clear();
     this.router.navigate(['/login']);
