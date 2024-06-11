@@ -180,9 +180,12 @@ updateSelectedUserData(){
         Object.values(item).some((value) =>
           value.toString().toLowerCase().includes(text.toLowerCase())
         )
+       
       );
+      console.log(this.tableSearchData)
       this.calculateTotalPages();
     });
+    
   }
 
 calculateTotalPages() {
@@ -194,8 +197,9 @@ getPaginatedData(){
   const endIndex = startIndex + this.itemsPerPage;
   return this.tableSearchData.slice(startIndex, endIndex);
 }
+
 goToPage(pageNumber: number) {
   if(pageNumber >= 1 && pageNumber <= this.totalPages)
-    this.currentPage= pageNumber;
+    this.currentPage= pageNumber;   
 }
 }

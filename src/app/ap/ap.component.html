@@ -219,7 +219,9 @@
   </div>
   <div *ngIf="totalPages > 1 && isVisiblePageDetails" class="pagination" >
     <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span> 
+    <span>Total Data {{tableSearchData }} of {{ totalPages }}</span> 
+      <span>Value {{tableSearchData.length}}</span>
     <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
   </div>
   <!-- <div *ngIf="totalPages > 1" class="pagination">

@@ -35,48 +35,50 @@ userName: string ='';
 userType:string ='';
 
   ngOnInit() {
+if(this.isLoggedIn()){
+  this.router.navigate(['/dashboard']);
+}
+
     this.LoginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       rememberMe: [false],
     });
-    const rememberMe = sessionStorage.getItem('rememberMe');
+    const rememberMe = localStorage.getItem('rememberMe');
     if (rememberMe === 'true') {
-      const email = sessionStorage.getItem('email');
-      const password = sessionStorage.getItem('password');
+      const email = localStorage.getItem('email');
+      const password = localStorage.getItem('password');
       if (email && password) {
         this.LoginForm.patchValue({ email, password });
       }
     }
   }
 
+  isLoggedIn() {
+    return localStorage.getItem('email') && localStorage.getItem('password');
+  }
+
+
   login() {
     if (this.LoginForm.valid) {
-
       const email = this.LoginForm.get('email').value;
       const password = this.LoginForm.get('password').value;
-      const rememberMe = this.LoginForm.get('rememberMe').value
-
-const isUserValid = this.users.some(user => user.email === email && user.password === password);
-
+      const rememberMe = this.LoginForm.get('rememberMe').value;
+  
+      const isUserValid = this.users.some(user => user.email === email && user.password === password);
+  
       if (isUserValid) {
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.setItem('rememberMe', 'false');
+        }
         this.router.navigate(['/dashboard']);
         const user = this.users.find(user => user.email === email && user.password === password);
-        this.nameService.setUserData(user!.name, user!.type)
-          
-
-          if(rememberMe){
-            sessionStorage.setItem('email', email);
-            sessionStorage.setItem('password', password);
-            sessionStorage.setItem('rememberMe', 'true');
-          }
-          else{
-            sessionStorage.removeItem('email');
-            sessionStorage.removeItem('password');
-            sessionStorage.setItem('rememberMe','false');
-          }
-      } 
-      else {
+        this.nameService.setUserData(user!.name, user!.type);
+      } else {
         this.snackbar.open('Please enter correct ID and Password', 'Close', {
           duration: 3000,
         });
@@ -88,3 +90,46 @@ const isUserValid = this.users.some(user => user.email === email && user.passwor
     }
   }
 }
+
+
+  
+//   login() {
+//     if (this.LoginForm.valid) {
+
+//       const email = this.LoginForm.get('email').value;
+//       const password = this.LoginForm.get('password').value;
+//       const rememberMe = this.LoginForm.get('rememberMe').value
+
+// const isUserValid = this.users.find(user => user.email === email && user.password === password);
+
+  
+
+//            if (isUserValid) {
+//             localStorage.setItem('email', email);
+//             localStorage.setItem('password', password);
+//         this.nameService.setUserData(isUserValid.name, isUserValid.type);
+//         this.router.navigate(['/dashboard']);
+
+//           if(rememberMe){
+//             localStorage.setItem('email', email);
+//             localStorage.setItem('password', password);
+//             localStorage.setItem('rememberMe', 'true');
+//           }
+//           else{
+//             localStorage.removeItem('email');
+//             localStorage.removeItem('password');
+//             localStorage.setItem('rememberMe','false');
+//           }
+//       } 
+//       else {
+//         this.snackbar.open('Please enter correct ID and Password', 'Close', {
+//           duration: 3000,
+//         });
+//       }
+//     } else {
+//       this.snackbar.open('Invalid email or password', 'Close', {
+//         duration: 3000,
+//       });
+//     }
+//   }
+// }

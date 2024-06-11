@@ -25,8 +25,14 @@ export class HeaderComponent implements OnChanges{
   }
   
   logout(){
-    sessionStorage.clear();
+    // sessionStorage.clear();
+    // this.router.navigate(['/login']);
+
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    localStorage.removeItem('rememberMe');
     this.router.navigate(['/login']);
+
   }
 }
 
