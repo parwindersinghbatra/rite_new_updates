@@ -1,25 +1,30 @@
 <div class="container">
   <div class="log-form">
-  <div class="left_login">
-    <h2>Login</h2>
-    <span>to continue to RITE</span>
+    <div class="left_login">
+      <h2>Login</h2>
+      <span>to continue to RITE</span>
+    </div>
+    <div class="right_login">
+      <form [formGroup]="LoginForm" (ngSubmit)="login()">
+        <div *ngIf="invalidLogin" class="error-message">
+          Please enter correct ID and Password
+        </div>
+        <div class="input-container">
+          <i class="fa fa-user icon"></i>
+          <input type="email" formControlName="email" required placeholder="Username" 
+            [ngClass]="{'input-invalid': LoginForm.controls.email.invalid && (LoginForm.controls.email.touched || invalidLogin)}"
+          />
+        </div>
+        <div class="input-container">
+          <i class="fa fa-eye icon password-toggle"></i>
+          <input type="password" formControlName="password" required placeholder="Password"  
+            [ngClass]="{'input-invalid': LoginForm.controls.password.invalid && (LoginForm.controls.password.touched || invalidLogin)}"
+          />
+        </div>
+        <input type="submit" class="btn" value="Login" [disabled]="!LoginForm.valid">
+      </form>
+    </div>
   </div>
-  <div class="right_login">
-    <form [formGroup]="LoginForm" (ngSubmit)="login()">
-      <div class="input-container">
-        <i class="fa fa-user icon"></i>
-        <input type="email" formControlName="email" placeholder="Username"/>
-      </div>
-      <div class="input-container">
-        <i class="fa fa-eye icon password-toggle"></i>
-        <input type="password" formControlName="password" placeholder="Password"/>
-      </div>
-      
-      <input type="submit" class="btn" value="Login">
-    </form>
-  </div>
-  </div>
-
 </div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

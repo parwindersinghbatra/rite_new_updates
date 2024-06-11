@@ -16,7 +16,7 @@ import { NameServiceService } from '../shared/name-service.service';
 export class LoginComponent {
   // isLoggedIn: boolean = false;
   LoginForm: any;
-
+  invalidLogin: boolean = false
   users = [
     { name : 'Sumit', email: 'sarora@teksearch.in', password: '123456', type:'Semi Admin'},
     { name : 'M Singh', email: 'msingh@proviso.ca', password: '123456',  type:'Global Admin' },
@@ -27,22 +27,24 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private snackbar: MatSnackBar,
-    
     private nameService: NameServiceService
-
   ) {}
 userName: string ='';
 userType:string ='';
 
-  ngOnInit() {
+ngOnInit() {
 if(this.isLoggedIn()){
   this.router.navigate(['/dashboard']);
 }
 
     this.LoginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', 
+        [
+          Validators.required,
+          Validators.email
+        ]],
       password: ['', Validators.required],
-      rememberMe: [false],
+      rememberMe: [true],
     });
     const rememberMe = localStorage.getItem('rememberMe');
     if (rememberMe === 'true') {
@@ -78,58 +80,12 @@ if(this.isLoggedIn()){
         this.router.navigate(['/dashboard']);
         const user = this.users.find(user => user.email === email && user.password === password);
         this.nameService.setUserData(user!.name, user!.type);
+        this.invalidLogin = false; 
       } else {
-        this.snackbar.open('Please enter correct ID and Password', 'Close', {
-          duration: 3000,
-        });
+        this.invalidLogin = true; 
       }
     } else {
-      this.snackbar.open('Invalid email or password', 'Close', {
-        duration: 3000,
-      });
+      this.invalidLogin = true;
     }
   }
 }
-
-
-  
-//   login() {
-//     if (this.LoginForm.valid) {
-
-//       const email = this.LoginForm.get('email').value;
-//       const password = this.LoginForm.get('password').value;
-//       const rememberMe = this.LoginForm.get('rememberMe').value
-
-// const isUserValid = this.users.find(user => user.email === email && user.password === password);
-
-  
-
-//            if (isUserValid) {
-//             localStorage.setItem('email', email);
-//             localStorage.setItem('password', password);
-//         this.nameService.setUserData(isUserValid.name, isUserValid.type);
-//         this.router.navigate(['/dashboard']);
-
-//           if(rememberMe){
-//             localStorage.setItem('email', email);
-//             localStorage.setItem('password', password);
-//             localStorage.setItem('rememberMe', 'true');
-//           }
-//           else{
-//             localStorage.removeItem('email');
-//             localStorage.removeItem('password');
-//             localStorage.setItem('rememberMe','false');
-//           }
-//       } 
-//       else {
-//         this.snackbar.open('Please enter correct ID and Password', 'Close', {
-//           duration: 3000,
-//         });
-//       }
-//     } else {
-//       this.snackbar.open('Invalid email or password', 'Close', {
-//         duration: 3000,
-//       });
-//     }
-//   }
-// }

@@ -24,6 +24,8 @@ export class HeaderComponent implements OnChanges{
     }
   }
   
+
+  
   logout(){
     // sessionStorage.clear();
     // this.router.navigate(['/login']);
